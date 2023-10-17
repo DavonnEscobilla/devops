@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MapQuest Directions</title>
+</head>
+<body>
+    <h1>MapQuest Directions</h1>
+    <form method="post">
+        <label for="orig">Source City:</label>
+        <input type="text" name="orig" required>
+        <br>
+        <label for="dest">Your Destination:</label>
+        <input type="text" name="dest" required>
+        <br>
+        <label for="x">Choose unit:</label>
+        <select name="x">
+            <option value="km">Kilometers</option>
+            <option value="mi">Miles</option>
+            <!-- Add other options as needed -->
+        </select>
+        <br>
+        <label for="path">Path to Take:</label>
+        <select name="path">
+            <option value="1">Fastest Path</option>
+            <option value="2">Shortest Path</option>
+            <option value="3">Walking Path</option>
+        </select>
+        <br>
+        <label for="avoid">Path to Avoid:</label>
+        <select name="avoid">
+            <option value="1">Highways</option>
+            <option value="2">Bridge</option>
+            <option value="3">Tunnel</option>
+            <option value="4">Streets</option>
+        </select>
+        <br>
+        <input type="submit" value="Get Directions">
+    </form>
+
+    <div id="output">
+        {% if json_data %}
+            <h2>Directions from {{ orig }} to {{ dest }}</h2>
+            <p>Arrival Time: {{ json_data.route.formattedTime }}</p>
+            <p>Distance: {{ json_data.route.distance }} miles</p>
+            <p>Kilometers: {{ json_data.route.distance * 1.61 }} km</p>
+            <p>Chosen Path: {% if path == 1 %} Fastest Path {% elif path == 2 %} Shortest Path {% elif path == 3 %} Walking Path {% endif %}</p>
+            <p>Avoided: {% if avoid == 1 %} Highways {% elif avoid == 2 %} Bridge {% elif avoid == 3 %} Tunnel {% elif avoid == 4 %} Streets {% endif %}</p>
+            <!-- Add other information as needed -->
+        {% endif %}
+    </div>
+</body>
+</html>
